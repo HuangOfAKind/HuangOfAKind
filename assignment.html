@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Assignment – Accordion Component Redesign</title>
+  <meta name="description" content="Assignment for Accordion Component Accessibility & Redesign">
+  <meta name="keywords" content="Accessibility, Accordion, Redesign, Inclusive Design">
+
+  <!-- Favicons (optional) -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="assignment-page">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <!-- Logo or Site Name -->
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1 class="sitename m-0">My Design Project</h1>
+      </a>
+      <!-- Single Navigation Menu Item -->
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="assignment.html" class="active">Assignment</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======= Hero Section (Optional) ======= -->
+  <section id="hero" class="hero section dark-background">
+    <img src="assets/img/hero-bg.jpg" alt="Background Image" data-aos="fade-in">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <h2>Accordion Accessibility Analysis</h2>
+      <p>Inputs, Outputs, State Models, & Inclusive Redesign</p>
+    </div>
+  </section>
+
+  <!-- ======= Assignment Content ======= -->
+  <main id="assignment" class="main">
+    <div class="container">
+
+      <!-- Part 1: Input -->
+      <section id="part1" class="section" data-aos="fade-up">
+        <h2>Part 1: Input</h2>
+        <p>
+          Describe how the accordion is used with mouse, keyboard, and touch across three applications (e.g., Safari, Zotero, VS Code). Include observations such as:
+        </p>
+        <ul>
+          <li>Safari: Mouse interactions include right-click options and double-clicking entries; keyboard navigation via arrow keys, but limited access to "Clear History"; touch interactions use long-press for options.</li>
+          <li>Zotero: Double-click editing for text; keyboard tabbing auto-enters editing mode, but no multi-select; no mobile version available.</li>
+          <li>VS Code: Drag-and-drop in file explorer; keyboard interactions involve entering edit mode with Enter, but Tab sometimes adds indentation; no touch support.</li>
+        </ul>
+        <!-- Add screenshots and tables as needed -->
+      </section>
+
+      <!-- Part 2: Output -->
+      <section id="part2" class="section" data-aos="fade-up">
+        <h2>Part 2: Output</h2>
+        <p>
+          Discuss the visual and non-visual outputs of the accordion component. Consider:
+        </p>
+        <ul>
+          <li>Visual cues (e.g., ‘>’ for collapsed and ‘⌄’ for expanded states) with color highlighting.</li>
+          <li>Screen reader outputs that announce state, position, and focus order.</li>
+          <li>Differences in how relative position and nested depth are communicated (or not communicated) across applications.</li>
+        </ul>
+      </section>
+
+      <!-- Part 3: State Models & Redesign -->
+      <section id="part3" class="section" data-aos="fade-up">
+        <h2>Part 3: State Models & Redesign</h2>
+        <p>
+          Present your state diagrams for mouse and keyboard users. Explain how your redesign addresses the following:
+        </p>
+        <ul>
+          <li>Adding explicit depth indicators to improve spatial awareness.</li>
+          <li>Enhancing keyboard navigation with clear focus and toggle actions.</li>
+          <li>Balancing efficiency, learnability, memorability, and accessibility.</li>
+        </ul>
+        <!-- Insert annotated state model images or diagrams here -->
+      </section>
+
+      <!-- Part 4: Reflection -->
+      <section id="part4" class="section" data-aos="fade-up">
+        <h2>Part 4: Reflection</h2>
+        <p>
+          Reflect on the inclusive design principles applied to your redesign:
+        </p>
+        <ul>
+          <li>What worked well in terms of usability and accessibility in the observed components?</li>
+          <li>Which accessibility considerations were previously overlooked and how have you addressed them?</li>
+          <li>How does your change address a mismatch in current design practices?</li>
+          <li>Examples: 
+            <ul>
+              <li>Without depth indicators, users must remember navigation steps, which can be challenging for those with visual impairments.</li>
+              <li>Prioritizing mouse and keyboard interactions often excludes touch and screen reader users, impacting overall user experience.</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer light-background">
+    <div class="container">
+      <h3 class="sitename">My Design Project</h3>
+      <p>Improving accessibility and usability with inclusive design principles.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href="#"><i class="bi bi-twitter-x"></i></a>
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container mt-4">
+        <div class="copyright">
+          &copy; <strong><span>My Design Project</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top Button -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Preloader (Optional) -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
