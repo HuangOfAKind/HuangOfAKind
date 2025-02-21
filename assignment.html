@@ -31,28 +31,30 @@
 </head>
 
 <body class="assignment-page">
+  <!-- Skip to Content Link for Accessibility -->
+  <a class="skip-link" href="#assignment" style="position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;">Skip to main content</a>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center fixed-top" role="banner">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
       <!-- Logo or Site Name -->
       <a href="index.html" class="logo d-flex align-items-center">
         <h1 class="sitename m-0">My Design Project</h1>
       </a>
       <!-- Single Navigation Menu Item -->
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu" aria-label="Main Navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="assignment.html" class="active">Assignment</a></li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list" aria-label="Toggle navigation"></i>
       </nav>
     </div>
   </header>
 
   <!-- ======= Hero Section (Optional) ======= -->
   <section id="hero" class="hero section dark-background">
-    <img src="assets/img/hero-bg.jpg" alt="Background Image" data-aos="fade-in">
+    <!-- <img src="assets/img/bg.jpg" alt="Background Image" data-aos="fade-in"> -->
     <div class="container" data-aos="fade-up" data-aos-delay="100">
       <h2>Accordion Accessibility Analysis</h2>
       <p>Inputs, Outputs, State Models, & Inclusive Redesign</p>
@@ -60,47 +62,563 @@
   </section>
 
   <!-- ======= Assignment Content ======= -->
-  <main id="assignment" class="main">
+  <main id="assignment" class="main" tabindex="-1">
     <div class="container">
+      <!-- Part 0: Interaction Processes & Differences -->
+      <section id="part0" class="section" data-aos="fade-up">
+        <h2>Part 0: Background and Context</h2>
+        <p>The component I selected is accordion. Accordions makes displaying and organizing complex hierarchical content efficient, providing ways to expand and collapse "subtrees" of the hierarchical organization.</p>
+        <section id="exampleAccordion" class="section" data-aos="fade-up">
+          <h3>Example Accordion</h3>
+          <div class="accordion" id="exampleAccordionContent">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="exampleHeadingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#exampleCollapseOne" aria-expanded="true" aria-controls="exampleCollapseOne">
+                  Section 1
+                </button>
+              </h2>
+              <div id="exampleCollapseOne" class="accordion-collapse collapse show" aria-labelledby="exampleHeadingOne" data-bs-parent="#exampleAccordionContent">
+                <div class="accordion-body">
+                  Section 1, we set this to be expanded by default.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="exampleHeadingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exampleCollapseTwo" aria-expanded="false" aria-controls="exampleCollapseTwo">
+                  Section 2
+                </button>
+              </h2>
+              <div id="exampleCollapseTwo" class="accordion-collapse collapse" aria-labelledby="exampleHeadingTwo" data-bs-parent="#exampleAccordionContent">
+                <div class="accordion-body">
+                  Section 2, we set this to be collapsed by default.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="exampleHeadingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exampleCollapseThree" aria-expanded="false" aria-controls="exampleCollapseThree">
+                  Section 3
+                </button>
+              </h2>
+              <div id="exampleCollapseThree" class="accordion-collapse collapse" aria-labelledby="exampleHeadingThree" data-bs-parent="#exampleAccordionContent">
+                <div class="accordion-body">
+                  Section 3, we set this to be collapsed by default.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <p>
+          For this assignments, I will analyze the accessibility and usability of the accordion component in three applications: Safari Browser History, Zotero, and Visual Studio Code.
+          Some screenshots of the accordion components (under various states) in these applications are shown below <b>(For the vibes, in the form of accordions)</b>.
+          <section id="screenshots" class="section" data-aos="fade-up">
+            <h2>Screenshots by Application</h2>
+            <div class="accordion" id="screenshotsAccordion">
+              <!-- Safari Accordion Item -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSafari">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSafari" aria-expanded="false" aria-controls="collapseSafari">
+                    Safari Browser History
+                  </button>
+                </h2>
+                <div id="collapseSafari" class="accordion-collapse collapse" aria-labelledby="headingSafari" data-bs-parent="#screenshotsAccordion">
+                  <div class="accordion-body">
+                    <h3>Safari Browser History Screenshots</h3>
+                    <div class="card-group">
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 1
+                        </div>
+                        <img src="assets/img/assignment1/s1.png" class="card-img-top img-fluid" alt="Safari Screenshot Stage 1">
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 2
+                        </div>
+                        <img src="assets/img/assignment1/s2.png" class="card-img-top img-fluid" alt="Safari Screenshot Stage 2">
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 3
+                        </div>
+                        <img src="assets/img/assignment1/s3.png" class="card-img-top img-fluid" alt="Safari Screenshot Stage 3">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Zotero Accordion Item -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingZotero">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZotero" aria-expanded="false" aria-controls="collapseZotero">
+                    Zotero
+                  </button>
+                </h2>
+                <div id="collapseZotero" class="accordion-collapse collapse" aria-labelledby="headingZotero" data-bs-parent="#screenshotsAccordion">
+                  <div class="accordion-body">
+                    <h3>Zotero Screenshots</h3>
+                    <div class="card-group">
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 1
+                        </div>
+                        <img src="assets/img/assignment1/z1.png" class="card-img-top img-fluid" alt="Zotero Screenshot Stage 1">
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 2
+                        </div>
+                        <img src="assets/img/assignment1/z2.png" class="card-img-top img-fluid" alt="Zotero Screenshot Stage 2">
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 3
+                        </div>
+                        <img src="assets/img/assignment1/z3.png" class="card-img-top img-fluid" alt="Zotero Screenshot Stage 3">
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 4
+                        </div>
+                        <img src="assets/img/assignment1/z4.png" class="card-img-top img-fluid" alt="Zotero Screenshot Stage 4">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Visual Studio Code Accordion Item -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingVSC">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVSC" aria-expanded="false" aria-controls="collapseVSC">
+                    Visual Studio Code
+                  </button>
+                </h2>
+                <div id="collapseVSC" class="accordion-collapse collapse" aria-labelledby="headingVSC" data-bs-parent="#screenshotsAccordion">
+                  <div class="accordion-body">
+                    <h3>Visual Studio Code Screenshots</h3>
+                    <div class="card-group">
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 1
+                        </div>
+                        <img src="assets/img/assignment1/vsc1.png" class="card-img-top img-fluid" alt="VS Code Screenshot Stage 1">
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 2
+                        </div>
+                        <img src="assets/img/assignment1/vsc2.png" class="card-img-top img-fluid" alt="VS Code Screenshot Stage 2">
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          Stage 3
+                        </div>
+                        <img src="assets/img/assignment1/vsc3.png" class="card-img-top img-fluid" alt="VS Code Screenshot Stage 3">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </section>
+          
+          
+        </p>
+
+      </section>
 
       <!-- Part 1: Input -->
       <section id="part1" class="section" data-aos="fade-up">
         <h2>Part 1: Input</h2>
+        <h3>Interaction Processes & Differences</h3>
         <p>
-          Describe how the accordion is used with mouse, keyboard, and touch across three applications (e.g., Safari, Zotero, VS Code). Include observations such as:
+          Across the three applications—Safari Browser History, Zotero, and Visual Studio Code—mouse usage generally allows basic selection, opening items with clicks or double clicks, and right-click for additional options. However, Safari’s history list requires a double click (rather than a single click) to open a page, which feels unintuitive. Zotero enables double-click editing but doesn’t allow multi-select via mouse. In VS Code, mouse interactions can include drag-and-drop in the file explorer, but no shift-based multi-select in certain views.
         </p>
-        <ul>
-          <li>Safari: Mouse interactions include right-click options and double-clicking entries; keyboard navigation via arrow keys, but limited access to "Clear History"; touch interactions use long-press for options.</li>
-          <li>Zotero: Double-click editing for text; keyboard tabbing auto-enters editing mode, but no multi-select; no mobile version available.</li>
-          <li>VS Code: Drag-and-drop in file explorer; keyboard interactions involve entering edit mode with Enter, but Tab sometimes adds indentation; no touch support.</li>
-        </ul>
-        <!-- Add screenshots and tables as needed -->
+        <h3>Functionalities & Usability Observations</h3>
+        <p>
+          With the keyboard, Safari supports arrow-key navigation and multi-select with Shift, but it doesn’t provide access to “Clear History” or open-in-new-tab functionality. Zotero’s keyboard approach lets users edit text fields immediately on focus, but again lacks multi-select. VS Code offers extensive keyboard shortcuts, though Tab can be overridden by code indentation, and toggling between editing mode and navigation can be tricky. Touch interactions are only partially available: Safari offers a long press for context options, while Zotero and VS Code lack dedicated mobile versions, effectively removing multi-select or editing features on touch devices.
+        </p>
+        <h3>Learnability, Memorability, Efficiency, and Mobile Considerations</h3>
+        <p>
+          Each component’s learnability depends on how familiar users are with standard interaction patterns: Safari’s double-click requirement is surprising, Zotero’s auto-entry into edit mode can be unexpected, and VS Code’s Tab indentation may confuse users expecting typical UI navigation. Over time, these behaviors become memorable, but they’re less efficient initially. For applications without mobile/touch support (Zotero, VS Code), essential functionalities (editing, multi-select, or drag-and-drop) do not translate to a mobile experience. This limits efficiency and learnability for users accustomed to the desktop versions, potentially causing frustration when switching to mobile or tablet usage where those interactions are unavailable.
+        </p>
+
+        <h3>More detailed comparisons</h3>
+        <div class="accordion" id="accordionInput">
+          <!-- Safari Browser History Accordion -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSafari">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSafari" aria-expanded="false" aria-controls="collapseSafari">
+                Safari Browser History
+              </button>
+            </h2>
+            <div id="collapseSafari" class="accordion-collapse collapse" aria-labelledby="headingSafari" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="accordion" id="accordionSafari">
+                  <!-- Mouse/Touchpad Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSafariMouse">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSafariMouse" aria-expanded="false" aria-controls="collapseSafariMouse">
+                        Mouse/Touchpad
+                      </button>
+                    </h2>
+                    <div id="collapseSafariMouse" class="accordion-collapse collapse" aria-labelledby="headingSafariMouse" data-bs-parent="#accordionSafari">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>Right clicks display more options (e.g. open in new tab).</li>
+                          <li>Click an entry then drag upward/downward to select multiple entries.</li>
+                          <li>Click the arrow icon to expand and collapse, which requires some precise finger control.</li>
+                          <li>Clicking each entry is essentially a no-op. Usually when there’s a link, it’s clickable which takes me to the original page. I find this counterintuitive that here it requires a double click to go to the target page.</li>
+                          <li>Hovering does not do anything.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Keyboard Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSafariKeyboard">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSafariKeyboard" aria-expanded="false" aria-controls="collapseSafariKeyboard">
+                        Keyboard
+                      </button>
+                    </h2>
+                    <div id="collapseSafariKeyboard" class="accordion-collapse collapse" aria-labelledby="headingSafariKeyboard" data-bs-parent="#accordionSafari">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>Couldn’t find a way to reach “Clear History” with the keyboard alone.</li>
+                          <li>Use upward and downward arrow keys to navigate and right/left arrow keys to expand/collapse.</li>
+                          <li>Shift + arrow keys allow selecting multiple entries.</li>
+                          <li>Can’t see more options (e.g. open in new tab).</li>
+                          <li>When focused on an entry and then hit enter, it does nothing.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Touch Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSafariTouch">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSafariTouch" aria-expanded="false" aria-controls="collapseSafariTouch">
+                        Touch (if available)
+                      </button>
+                    </h2>
+                    <div id="collapseSafariTouch" class="accordion-collapse collapse" aria-labelledby="headingSafariTouch" data-bs-parent="#accordionSafari">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>Drag and drop is disabled, which makes sense given the search history has a predefined order.</li>
+                          <li>Pressing on an entry for a few seconds shows many options, which is a great touch.</li>
+                          <li>I can’t find a way to select multiple entries though.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div> <!-- End Safari nested accordion -->
+              </div>
+            </div>
+          </div>
+        
+          <!-- Zotero Accordion -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingZotero">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZotero" aria-expanded="false" aria-controls="collapseZotero">
+                Zotero
+              </button>
+            </h2>
+            <div id="collapseZotero" class="accordion-collapse collapse" aria-labelledby="headingZotero" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="accordion" id="accordionZotero">
+                  <!-- Mouse/Touchpad Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingZoteroMouse">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZoteroMouse" aria-expanded="false" aria-controls="collapseZoteroMouse">
+                        Mouse/Touchpad
+                      </button>
+                    </h2>
+                    <div id="collapseZoteroMouse" class="accordion-collapse collapse" aria-labelledby="headingZoteroMouse" data-bs-parent="#accordionZotero">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>When I double click on editable text, it enters the “editing mode” where I can update the text.</li>
+                          <li>There’s no way for me to select multiple entries, even when pressing “shift” at the same time.</li>
+                          <li>For mouse interactions, it’s mostly consistent with other applications.</li>
+                          <li>Hovering shows the relative path in my file organization.</li>
+                          <li>When double clicking an entry, it opens the PDF.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Keyboard Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingZoteroKeyboard">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZoteroKeyboard" aria-expanded="false" aria-controls="collapseZoteroKeyboard">
+                        Keyboard
+                      </button>
+                    </h2>
+                    <div id="collapseZoteroKeyboard" class="accordion-collapse collapse" aria-labelledby="headingZoteroKeyboard" data-bs-parent="#accordionZotero">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>When I use the tab to get the editable text, it automatically enters the “editing mode” where my keystrokes are used to update the text field.</li>
+                          <li>Left/right arrow keys are used to collapse/expand.</li>
+                          <li>Tab/shift+tab is used to navigate across various components (e.g. there are multiple accordions).</li>
+                          <li>For a given accordion, up/down arrow keys are used to navigate through them.</li>
+                          <li>When focused on an entry, pressing “enter” opens the PDF.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Touch Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingZoteroTouch">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZoteroTouch" aria-expanded="false" aria-controls="collapseZoteroTouch">
+                        Touch (if available)
+                      </button>
+                    </h2>
+                    <div id="collapseZoteroTouch" class="accordion-collapse collapse" aria-labelledby="headingZoteroTouch" data-bs-parent="#accordionZotero">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>N/A – I don’t have this app on my mobile device.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div> <!-- End Zotero nested accordion -->
+              </div>
+            </div>
+          </div>
+        
+          <!-- Visual Studio Code Accordion -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingVSCode">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVSCode" aria-expanded="false" aria-controls="collapseVSCode">
+                Visual Studio Code
+              </button>
+            </h2>
+            <div id="collapseVSCode" class="accordion-collapse collapse" aria-labelledby="headingVSCode" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="accordion" id="accordionVSCode">
+                  <!-- Mouse/Touchpad Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingVSCodeMouse">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVSCodeMouse" aria-expanded="false" aria-controls="collapseVSCodeMouse">
+                        Mouse/Touchpad
+                      </button>
+                    </h2>
+                    <div id="collapseVSCodeMouse" class="accordion-collapse collapse" aria-labelledby="headingVSCodeMouse" data-bs-parent="#accordionVSCode">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>There’s no way for me to select multiple entries, even when pressing “shift” at the same time.</li>
+                          <li>Right-click expands options.</li>
+                          <li>When hovering over an entry, it shows the absolute path for the corresponding file.</li>
+                          <li>I can drag & drop a file to different places in this accordion.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Keyboard Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingVSCodeKeyboard">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVSCodeKeyboard" aria-expanded="false" aria-controls="collapseVSCodeKeyboard">
+                        Keyboard
+                      </button>
+                    </h2>
+                    <div id="collapseVSCodeKeyboard" class="accordion-collapse collapse" aria-labelledby="headingVSCodeKeyboard" data-bs-parent="#accordionVSCode">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>When I focus on a text field, I need to hit “enter” to enter the “editing mode” where my entered keystrokes are used to update the text field.</li>
+                          <li>Like many other applications, “tab” is used to navigate between multiple components, but in VS Code, when I currently focus on the codebase component, if I keep hitting the “tab” key, it simply adds indentation to the code instead of moving to the next component.</li>
+                          <li>Shift + up/down arrows help me select multiple entries.</li>
+                          <li>Left/right arrows are used to collapse/expand.</li>
+                          <li>I can’t find the view that corresponds to “right clicking” for the mouse interaction.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Touch Section -->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingVSCodeTouch">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVSCodeTouch" aria-expanded="false" aria-controls="collapseVSCodeTouch">
+                        Touch (if available)
+                      </button>
+                    </h2>
+                    <div id="collapseVSCodeTouch" class="accordion-collapse collapse" aria-labelledby="headingVSCodeTouch" data-bs-parent="#accordionVSCode">
+                      <div class="accordion-body">
+                        <ul>
+                          <li>N/A – I don’t have this app on my mobile device.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div> <!-- End VS Code nested accordion -->
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </section>
 
       <!-- Part 2: Output -->
       <section id="part2" class="section" data-aos="fade-up">
         <h2>Part 2: Output</h2>
-        <p>
-          Discuss the visual and non-visual outputs of the accordion component. Consider:
-        </p>
-        <ul>
-          <li>Visual cues (e.g., ‘>’ for collapsed and ‘⌄’ for expanded states) with color highlighting.</li>
-          <li>Screen reader outputs that announce state, position, and focus order.</li>
-          <li>Differences in how relative position and nested depth are communicated (or not communicated) across applications.</li>
-        </ul>
+        <section id="output-accordions" data-aos="fade-up">
+          <h3>Output Comparison</h3>
+          <div class="accordion" id="outputAccordion">
+            <!-- Safari Accordion -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingSafariOutput">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSafariOutput" aria-expanded="false" aria-controls="collapseSafariOutput">
+                  Safari
+                </button>
+              </h2>
+              <div id="collapseSafariOutput" class="accordion-collapse collapse" aria-labelledby="headingSafariOutput" data-bs-parent="#outputAccordion">
+                <div class="accordion-body">
+                  <h4>Visual Cues</h4>
+                  <ul>
+                    <li>'>' for collapsed, '⌄' for expanded.</li>
+                    <li>Color highlights for selected entries.</li>
+                  </ul>
+                  <h4>Focus Order</h4>
+                  <ul>
+                    <li>No dedicated internal focus order in history.</li>
+                    <li>Navigates only through browser-level features.</li>
+                  </ul>
+                  <h4>Screen Reader Outputs</h4>
+                  <ul>
+                    <li>Announces text, state, and relative position (e.g., row 2 of 6).</li>
+                    <li>Does not report nested depth.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Zotero Accordion -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingZoteroOutput">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZoteroOutput" aria-expanded="false" aria-controls="collapseZoteroOutput">
+                  Zotero
+                </button>
+              </h2>
+              <div id="collapseZoteroOutput" class="accordion-collapse collapse" aria-labelledby="headingZoteroOutput" data-bs-parent="#outputAccordion">
+                <div class="accordion-body">
+                  <h4>Visual Cues</h4>
+                  <ul>
+                    <li>'>' for collapsed, '⌄' for expanded.</li>
+                    <li>Consistent color coding for selected entries.</li>
+                  </ul>
+                  <h4>Focus Order</h4>
+                  <ul>
+                    <li>Hierarchical focus order that navigates through main components to sub-components.</li>
+                    <li>Logical tab order within the file structure.</li>
+                  </ul>
+                  <h4>Screen Reader Outputs</h4>
+                  <ul>
+                    <li>Announces text, state, and relative position.</li>
+                    <li>Lacks reporting of nested depth, affecting understanding of deep file structures.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Visual Studio Code Accordion -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingVSCodeOutput">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVSCodeOutput" aria-expanded="false" aria-controls="collapseVSCodeOutput">
+                  Visual Studio Code
+                </button>
+              </h2>
+              <div id="collapseVSCodeOutput" class="accordion-collapse collapse" aria-labelledby="headingVSCodeOutput" data-bs-parent="#outputAccordion">
+                <div class="accordion-body">
+                  <h4>Visual Cues</h4>
+                  <ul>
+                    <li>'>' for collapsed, '⌄' for expanded.</li>
+                    <li>Highlights selected items with visual cues.</li>
+                  </ul>
+                  <h4>Focus Order</h4>
+                  <ul>
+                    <li>Hierarchical focus order similar to Zotero.</li>
+                    <li>Tab key behavior can conflict with code editing (adding indentation instead of moving focus).</li>
+                  </ul>
+                  <h4>Screen Reader Outputs</h4>
+                  <ul>
+                    <li>Announces text, state, and relative position.</li>
+                    <li>Does not report nested depth; hover interactions are not announced.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
       </section>
 
       <!-- Part 3: State Models & Redesign -->
       <section id="part3" class="section" data-aos="fade-up">
         <h2>Part 3: State Models & Redesign</h2>
         <p>
-          Present your state diagrams for mouse and keyboard users. Explain how your redesign addresses the following:
+          I am redesigning the VS Code Explorer Panel to include depth indicators for nested file structures, enabling immediate awareness of each folder or file’s level. This removes guesswork or memorization for users (improving learnability), and consistent depth cues reinforce how items are structured (boosting memorability). By instantly revealing the current depth, navigation becomes faster and more intuitive (increasing efficiency), and announcing depth levels via screen readers ensures a clearer understanding for visually impaired users or anyone who struggles with spatial awareness (enhancing accessibility).
         </p>
-        <ul>
-          <li>Adding explicit depth indicators to improve spatial awareness.</li>
-          <li>Enhancing keyboard navigation with clear focus and toggle actions.</li>
-          <li>Balancing efficiency, learnability, memorability, and accessibility.</li>
-        </ul>
+        <div class="accordion" id="imageAccordion">
+          <!-- Accordion Item for State Models -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingStateModels">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStateModels" aria-expanded="false" aria-controls="collapseStateModels">
+                State Models
+              </button>
+            </h2>
+            <div id="collapseStateModels" class="accordion-collapse collapse" aria-labelledby="headingStateModels" data-bs-parent="#imageAccordion">
+              <div class="accordion-body">
+                <div class="card">
+                  <img src="assets/img/assignment1/state_diagrams.jpg" class="card-img-top img-fluid" alt="State Diagrams">
+                  <div class="card-body">
+                    <h3 class="card-title">State Models</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Accordion Item for Redesign Component 1 -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingRedesign1">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRedesign1" aria-expanded="false" aria-controls="collapseRedesign1">
+                Redesign Component 1
+              </button>
+            </h2>
+            <div id="collapseRedesign1" class="accordion-collapse collapse" aria-labelledby="headingRedesign1" data-bs-parent="#imageAccordion">
+              <div class="accordion-body">
+                <div class="card">
+                  <img src="assets/img/assignment1/state_design1.jpg" class="card-img-top img-fluid" alt="Redesign Component 1">
+                  <div class="card-body">
+                    <h3 class="card-title">Redesign Component 1</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Accordion Item for Redesign Component 2 -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingRedesign2">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRedesign2" aria-expanded="false" aria-controls="collapseRedesign2">
+                Redesign Component 2
+              </button>
+            </h2>
+            <div id="collapseRedesign2" class="accordion-collapse collapse" aria-labelledby="headingRedesign2" data-bs-parent="#imageAccordion">
+              <div class="accordion-body">
+                <!-- Add your card or content for Redesign Component 2 here -->
+                <div class="card">
+                  <!-- Example placeholder if you have an image -->
+                  <img src="assets/img/assignment1/placeholder.jpg" class="card-img-top img-fluid" alt="Redesign Component 2">
+                  <div class="card-body">
+                    <h3 class="card-title">Redesign Component 2</h3>
+                  </div>
+                </div>
+                <!-- Or replace the card above with your actual content -->
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
         <!-- Insert annotated state model images or diagrams here -->
       </section>
 
@@ -108,34 +626,34 @@
       <section id="part4" class="section" data-aos="fade-up">
         <h2>Part 4: Reflection</h2>
         <p>
-          Reflect on the inclusive design principles applied to your redesign:
+          In Safari, Zotero, and VS Code, many basic UI features work well for usability and accessibility—such as clear visual focus states, arrow-key navigation, and highlighting selected entries. However, they sometimes miss deeper accessibility elements like announcing depth in nested structures. My redesign in the VS Code Explorer Panel adds explicit depth indicators, reducing guesswork for everyone and providing critical clarity for screen readers and users with limited spatial memory.
         </p>
+        <p>Some accessibility considerations—like ensuring the visualization of depth of nested features can be easily interpreted by people with visual impairments—aren’t always addressed in these applications. In my redesign, I account for this by announcing depth levels audibly and visually, solving a “mismatch” between hierarchical navigation and a user’s ability to track complex nesting (as described in Kat Holmes’ framework).        </p>
         <ul>
-          <li>What worked well in terms of usability and accessibility in the observed components?</li>
-          <li>Which accessibility considerations were previously overlooked and how have you addressed them?</li>
-          <li>How does your change address a mismatch in current design practices?</li>
-          <li>Examples: 
-            <ul>
-              <li>Without depth indicators, users must remember navigation steps, which can be challenging for those with visual impairments.</li>
-              <li>Prioritizing mouse and keyboard interactions often excludes touch and screen reader users, impacting overall user experience.</li>
-            </ul>
+          <li>
+            <strong>Keyboard-Only:</strong> If depth isn’t announced, users navigating complex folders can get lost. Adding verbal depth cues reduces cognitive strain.
+          </li>
+          <li>
+            <strong>Mouse &amp; Motor Impairments:</strong> Reliance on hovering or drag-and-drop can exclude users with limited precision; adding explicit click-based navigation ensures more inclusive access.
           </li>
         </ul>
+        
+        <p>Historically, mouse and keyboard interactions are most commonly prioritized in component design. This can marginalize touch users and screen-reader users who rely on well-defined focus and spoken feedback, ultimately impacting learnability and efficiency for those groups. By designing with screen-reader and touch inputs in mind from the start, we create more inclusive, intuitive experiences for all.</p>
       </section>
 
     </div>
   </main>
 
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer light-background">
+  <footer id="footer" class="footer light-background" role="contentinfo">
     <div class="container">
       <h3 class="sitename">My Design Project</h3>
       <p>Improving accessibility and usability with inclusive design principles.</p>
       <div class="social-links d-flex justify-content-center">
-        <a href="#"><i class="bi bi-twitter-x"></i></a>
-        <a href="#"><i class="bi bi-facebook"></i></a>
-        <a href="#"><i class="bi bi-instagram"></i></a>
-        <a href="#"><i class="bi bi-linkedin"></i></a>
+        <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
       </div>
       <div class="container mt-4">
         <div class="copyright">
@@ -149,7 +667,7 @@
   </footer>
 
   <!-- Scroll Top Button -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" aria-label="Scroll to top">
     <i class="bi bi-arrow-up-short"></i>
   </a>
 
