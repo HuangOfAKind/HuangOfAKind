@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Assignment - Responsive Redesign</title>
+    <meta name="description" content="Responsive Redesign Assignment">
+    <meta name="keywords" content="Responsive Redesign, UIUX">
+    <link href="assets/css/personas.css" rel="stylesheet">
+  </head>
+  <body class="assignment-page">
+    <a class="skip-link" href="#assignment">Skip to main content</a>
+    <header id="header" class="header fixed-top" role="banner">
+      <div class="header-container">
+        <a href="index.html" class="logo">
+          <h1 class="sitename">My Design Project</h1>
+        </a>
+        <nav id="navmenu" class="navmenu" aria-label="Main Navigation">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="assignment.html" class="active">Responsive Redesign</a></li>
+          </ul>
+          <button class="mobile-nav-toggle" aria-label="Toggle navigation">Menu</button>
+        </nav>
+      </div>
+    </header>
+    
+    <section id="hero" class="hero section dark-background">
+      <div class="container">
+        <h2>Responsive Redesign</h2>
+        <p>A Comprehensive Workflow for Redesigning a Web Page</p>
+      </div>
+    </section>
+    
+    <main id="assignment" class="main" tabindex="-1">
+      <div class="container">
+        
+        <!-- Overview -->
+        <section id="overview" class="section">
+          <h2>Overview</h2>
+          <p>
+            This assignment focuses on analyzing an existing webpage, identifying usability and accessibility issues,
+            creating high-fidelity mockups for various screen sizes, and building a responsive webpage based on my prototypes.
+          </p>
+        </section>
+        
+        <!-- Part 1: Identifying Usability Problems -->
+        <section id="part1" class="section">
+          <h2>Part 1: Identifying Usability Problems</h2>
+          <h3>Quora</h3>
+          <p>
+            I choose Quora, a popular question-and-answer website, for this assignment.
+            Specifically, I am focusing on this page: <a href="https://www.quora.com/What-are-effective-ways-to-incorporate-typography-into-website-design" target="_blank">What are effective ways to incorporate typography into website design?</a>.
+            I chose this page because I have always found the display of answers on Quora confusing where I cannot tell the difference between the (1) answers to the current question, (2) answers to relevant questions, and (3) promoted ads and often left frustrated.
+          </p>
+          <img 
+              src="assets/img/assignment3/quora.png" 
+              alt="Example Quora Page" 
+              style="
+                display: block;
+                margin: auto;
+                max-width: 1200px;
+                width: 100%;
+                height: auto;
+              "
+            >
+          
+          <h4 style="text-align: center;">Example of answer to the current question ⬇️</h4>
+          <img 
+              src="assets/img/assignment3/same_example.png" 
+              alt="Example answer to the current question" 
+              style="
+                display: block;
+                margin: auto;
+                max-width: 600px;
+                width: 100%;
+                height: auto;
+              "
+            >
+
+            <h4 style="text-align: center;">Example of answer to a relevant question ⬇️</h4>
+            <img 
+                src="assets/img/assignment3/linked_example.png" 
+                alt="Example of answer to a relevant question" 
+                style="
+                  display: block;
+                  margin: auto;
+                  max-width: 600px;
+                  width: 100%;
+                  height: auto;
+                "
+              >
+
+            <h4 style="text-align: center;">Example of promoted ads ⬇️</h4>
+            <img 
+                src="assets/img/assignment3/sponsored_example.png" 
+                alt="Example promoted ads" 
+                style="
+                  display: block;
+                  margin: auto;
+                  max-width: 600px;
+                  width: 100%;
+                  height: auto;
+                "
+              >
+          <h3>Finding Problems</h3>
+          <ul>
+            <li>
+              <strong>Analyze Efficiency, Learnability, and Memorability:</strong>
+              <ul>
+                <li>Poor efficiency even for people who are familiar with the type distinctions: mixed content and unclear visual cues slows users from quickly discerning main answers, related answers, and ads.</li>
+                <li>Poor learnability: Lacks clear cues to tell different types of responses, resulting in a steep learning curve for new users to distinguish different types of responses.</li>
+                <li>Poor memorability for returned users: inconsistent hierarchy makes it difficult for returning users to recall where specific information is located. Also, the ordering of the contents seem dynamic, so a top relevant response may not even be at the top the next time the user visits the same page.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Evaluate the Conceptual Model of the Interface:</strong>
+              <ul>
+                <li>The layout of all the answers lacks clear segmentation between primary answers, related content, and ads.</li>
+                <li>This ambiguity makes it difficult for users to form an effective mental model of the page as to what to focus on.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Accessibility Issues (WebAIM WAVE):</strong>
+              <ul>
+                <li>It has 20 images that are missing alt text. I think the lack of alternative text is less severe than these issues usually are because the ones lacking alt text are user profile pictures, which are not essential to the content. However, it is still important to provide alt text for all images to ensure that all users can access the content.</li>
+                <li>I think it may be an intential design dark pattern to make the sponsored content less noticeable, but it is still important to make sure that all users can easily identify sponsored content. Failure to do so can lead to users clicking on sponsored content without realizing it, which can be frustrating and misleading.</li>
+              </ul>
+            </li>
+          </ul>
+          
+        </section>
+        
+        <!-- Part 2: Visual Redesign -->
+        <section id="part2" class="section">
+          <h2>Part 2: Visual Redesign</h2>
+          <h3>Visual Design Style Guide</h3>
+          <img 
+                src="assets/img/assignment3/Major_components.png" 
+                alt="Example promoted ads" 
+                style="
+                  display: block;
+                  margin: auto;
+                  max-width: 800px;
+                  width: 100%;
+                  height: auto;
+                "
+              >
+          <h3>Mockups</h3>
+          <p>
+            Create three annotated mockups (mobile, tablet, desktop). Describe layout choices (e.g., flexbox/grid usage,
+            spacing, responsive adjustments) so a developer can implement your design with minimal additional explanation.
+          </p>
+          <img 
+                src="assets/img/assignment3/mock-design.png" 
+                alt="Example promoted ads" 
+                style="
+                  display: block;
+                  margin: auto;
+                  max-width: 800px;
+                  width: 100%;
+                  height: auto;
+                "
+              >
+          <img 
+                src="assets/img/assignment3/mock1.png" 
+                alt="Example promoted ads" 
+                style="
+                  display: block;
+                  margin: auto;
+                  max-width: 800px;
+                  width: 100%;
+                  height: auto;
+                "
+              >
+              <img 
+                src="assets/img/assignment3/mock2.png" 
+                alt="Example promoted ads" 
+                style="
+                  display: block;
+                  margin: auto;
+                  max-width: 800px;
+                  width: 100%;
+                  height: auto;
+                "
+              >
+              <img 
+                src="assets/img/assignment3/mock3.png" 
+                alt="Example promoted ads" 
+                style="
+                  display: block;
+                  margin: auto;
+                  max-width: 1500px;
+                  width: 100%;
+                  height: auto;
+                "
+              >
+        </section>
+        
+       
+      </div>
+    </main>
+    
+    <a href="#" id="scroll-top" class="scroll-top" aria-label="Scroll to top"><span>↑</span></a>
+    <div id="preloader"></div>
+    
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
