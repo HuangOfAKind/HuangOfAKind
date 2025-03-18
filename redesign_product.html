@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quora Typography Question</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .custom-dropdown .dropdown-toggle {
+      width: 150px;
+      background-color: #e9e9e9;
+      border: none;
+      border-radius: 4px;
+      color: #000;
+    }
+    .custom-dropdown .dropdown-toggle:hover,
+    .custom-dropdown .dropdown-toggle:focus {
+      background-color: #dedede;
+    }
+    .card-header {
+      background-color: transparent;
+      border-bottom: none;
+    }
+    .timestamp {
+      font-size: 0.875rem;
+      color: #6c757d;
+    }
+    .card {
+      max-width: 600px;
+      margin: auto;
+    }
+    .normal-card {
+      border: none;
+    }
+    .sponsored-card {
+      background-color: #f8f9fa;
+      border: 1px solid #ced4da;
+    }
+    .related-card {
+      border: 1px dashed #6c757d;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-light bg-white w-100">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="assets/img/assignment3p/logo.png" alt="Quora Logo" style="height: 40px; width: auto;">
+      </a>
+    </div>
+  </nav>
+  <div class="container py-4">
+    <div class="mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-3">
+          What are effective ways to incorporate typography into website design?
+        </h2>
+        <div class="custom-dropdown">
+          <button id="sortDropdown" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Recommended
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Recommended</a></li>
+            <li><a class="dropdown-item" href="#">Upvotes</a></li>
+            <li><a class="dropdown-item" href="#">Recent</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4 normal-card">
+      <div class="card-header">
+        <strong>Username</strong>
+        <div class="timestamp">March 15, 2025, 10:00 AM</div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at bibendum orci.
+          Suspendisse dignissim, ipsum at facilisis imperdiet, nulla massa volutpat nunc,
+          at porttitor elit risus ac nulla.
+        </p>
+      </div>
+    </div>
+    <div class="card mb-4 normal-card">
+      <div class="card-header">
+        <strong>Username</strong>
+        <div class="timestamp">March 15, 2025, 10:00 AM</div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at bibendum orci.
+          Suspendisse dignissim, ipsum at facilisis imperdiet, nulla massa volutpat nunc,
+          at porttitor elit risus ac nulla.
+        </p>
+      </div>
+    </div>
+    <div class="card mb-4 normal-card">
+      <div class="card-header">
+        <strong>Username</strong>
+        <div class="timestamp">March 15, 2025, 10:00 AM</div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at bibendum orci.
+          Suspendisse dignissim, ipsum at facilisis imperdiet, nulla massa volutpat nunc,
+          at porttitor elit risus ac nulla.
+        </p>
+      </div>
+    </div>
+    <div class="card mb-4 sponsored-card">
+      <div class="card-header">
+        <strong>Sponsor name</strong>
+        <div class="timestamp">March 15, 2025, 10:05 AM</div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec egestas libero.
+          Nulla facilisi. Sed ac malesuada diam. Vestibulum ante ipsum primis in faucibus orci luctus
+          et ultrices posuere cubilia curae; Pellentesque habitant morbi tristique senectus et netus
+          et malesuada fames ac turpis egestas.
+        </p>
+      </div>
+    </div>
+    <div class="card mb-4 related-card">
+      <div class="card-header">
+        <strong>Username</strong> --- Answered under a related post
+        <div class="timestamp">March 15, 2025, 10:10 AM</div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum dignissim justo,
+          et placerat nulla feugiat non. Vivamus luctus nibh vel risus tincidunt finibus.
+          Aenean ac commodo orci, eu faucibus lorem.
+        </p>
+      </div>
+    </div>
+    <div class="card mb-4 related-card">
+      <div class="card-header">
+        <strong>Username</strong> --- Answered under a related post
+        <div class="timestamp">March 15, 2025, 10:10 AM</div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum dignissim justo,
+          et placerat nulla feugiat non. Vivamus luctus nibh vel risus tincidunt finibus.
+          Aenean ac commodo orci, eu faucibus lorem.
+        </p>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.querySelectorAll('.dropdown-menu a').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('sortDropdown').textContent = this.textContent;
+      });
+    });
+  </script>
+</body>
+</html>
