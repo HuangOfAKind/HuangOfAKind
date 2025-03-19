@@ -41,6 +41,20 @@
     .related-card {
       border: 1px dashed #6c757d;
     }
+    p:hover,
+    h2:hover,
+    .card-header strong:hover,
+    a:hover {
+      text-decoration: underline;
+      transition: all 0.2s ease;
+    }
+    .sign-in {
+      background-color: #a82723;
+      border: none;
+      border-radius: 20px;
+      color: #fff;
+      padding: 5px 15px;
+    }
   </style>
 </head>
 <body>
@@ -49,6 +63,7 @@
       <a class="navbar-brand" href="#">
         <img src="assets/img/assignment3p/logo.png" alt="Quora Logo" style="height: 40px; width: auto;">
       </a>
+      <button class="btn sign-in">Sign in</button>
     </div>
   </nav>
   <div class="container py-4">
