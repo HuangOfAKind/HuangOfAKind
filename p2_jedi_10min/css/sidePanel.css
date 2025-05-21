@@ -1,0 +1,981 @@
+/* ─── RESET & BASE ───────────────────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: system-ui, sans-serif;
+  background: #fff;          /* overall white background */
+}
+/* 1) Make the root span the full viewport */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2) Stack header + filter + content vertically */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3) Header bar, goal row, and slider only take their natural height */
+.control-bar,
+#goals-container,
+#score-filter-wrap {
+  flex: 0 0 auto;
+}
+
+/* 4) Exploration & rationale each fill the remaining space */
+.main-container {
+  flex: 1 1 auto;   /* grow to fill */
+  overflow-y: auto; /* scroll if needed */
+}
+
+
+
+/* placeholder */
+.placeholder {
+  background: #ccc;
+  border-radius: 4px;
+  color: #ccc;
+}
+
+/* ─── VARIABLES ──────────────────────────────────────────────────────────────── */
+:root {
+  --gutter: 24px;
+  --slider-track-height: 8px;
+  --slider-thumb-size: 20px;
+  --slider-thumb: #2196F3;
+  --slider-thumb-hover: #1976D2;
+  --neg-red: #db4c4c;
+  --factor-bg: #f1f1f1;
+  --factor-border: #ddd;
+  --factor-radius: 16px;
+  --factor-padding: 4px 12px;
+  --factor-gap: 8px;
+  --factor-font-size: 0.9rem;
+  --factor-color: #333;
+  --factor-hover-bg: #e0e0e0;
+  --factor-hover-border: #ccc;
+}
+
+/* ─── CONTROL PANEL ──────────────────────────────────────────────────────────── */
+/* --- top bar ---------------------------------------------- */
+.control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* dash between first & last child */
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+  position: relative;  /* for the dropdown */
+}
+
+/* Left: menu button stays at start of flex row */
+#menu-btn {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  padding: 6px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+#menu-btn svg,
+#menu-btn img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Center: title grows to fill the gap, and text is centered */
+#topic-title {
+  flex: 1 1 auto;
+  margin: 0 12px;      /* small gutters so it never overlaps buttons */
+  text-align: center;
+  font-size: 1.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Right: phase toggle stays at end of flex row */
+#phase-btn {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  padding: 6px 14px;
+  background: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+}
+#phase-btn:hover  { background: #1976D2; transform: translateY(-1px); }
+#phase-btn:active { background: #1565C0; transform: translateY(0); }
+
+/* ─── HEADER FORM (session title + goal dropdown) ───────────────────────────────── */
+/* ─── Session title & goal dropdown ───────────────────────────────────── */
+#intentionInput,
+#goalDropdown {
+  font-size: 1rem;
+  font-family: inherit;
+  background: none;
+  border: none;
+  border-bottom: 1px dashed #888;
+  padding: 2px 4px;
+  color: #222;
+  min-width: 140px;
+  transition: border-color 0.15s;
+  margin-right: 8px;
+}
+
+#intentionInput:focus,
+#goalDropdown:focus {
+  outline: none;
+  border-bottom: 1px solid var(--accent);
+}
+
+/* HEADER FORM */
+/* 1) Single‐row header */
+#header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;                /* fill the space between menu & phase button */
+  min-width: 0;           /* <-- important so children can shrink */
+  overflow: hidden;       /* no wrapping, and clip if too big */
+}
+
+/* 2) Session title grows but can shrink past its placeholder width */
+#intentionInput {
+  flex: 1 1 auto;         /* grow AND shrink */
+  min-width: 0;           /* allow it to shrink smaller than content */
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-bottom: 1px solid var(--accent);
+  background: transparent;
+  padding: 2px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 3) Goal dropdown fixed size */
+#goalDropdown {
+  flex: 0 0 auto;         /* don’t grow or shrink */
+  font-size: 0.95rem;
+  border: none;
+  border-bottom: 1px dashed #888;
+  background: transparent;
+  padding: 2px 4px;
+}
+
+/* optional: hide scrollbar in webkit */
+#intentionInput::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* make the menu a floating dropdown */
+/*──────────────── ACCENT & DANGER COLORS ─────────────────────────────*/
+:root {
+  --accent:        #3098f0;
+  --accent-hover:  #1f7dd0;
+  --accent-active: #1769b3;
+  --danger:        #db4c4c;
+  --danger-bg:     #ffecec;
+}
+
+/*──────────────── MAIN DROPDOWN CARD ────────────────────────────────*/
+#menu-dropdown.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 12px;                           /* stays under hamburger */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0,0,0,.15);
+  padding: 4px 0;
+  list-style: none;
+  margin: 0;
+  min-width: 220px;
+  z-index: 1000;
+  font-size: 14px;
+}
+
+/*──────────────── GENERIC ROW STYLE ────────────────────────────────*/
+/* Remove default bullets everywhere */ */
+#menu-dropdown.menu ul         { list-style: none; padding-left: 0; }
+#menu-dropdown.menu li         { list-style: none; }
+
+#menu-dropdown.menu li,
+#llm-submenu li {
+  position: relative;
+  padding: 8px 16px 6px 26px;           /* space for optional accent bar */
+  color: #222;
+  cursor: pointer;
+  white-space: nowrap;
+  border-left: 3px solid transparent;
+  transition: background .15s, border-color .15s, color .15s;
+}
+#menu-dropdown.menu li:hover,
+#llm-submenu li:hover {
+  background: #f3f8ff;
+}
+#menu-dropdown.menu li:active,
+#llm-submenu li:active {
+  background: #e7f1ff;
+}
+
+
+
+/*──────────────── LABEL ROW (Choose LLM Model) ─────────────────────*/
+#menu-dropdown.menu li.submenu {
+  font-weight: 600;
+  color: var(--accent);
+  cursor: default;            /* acts as label */
+}
+#menu-dropdown.menu li.submenu:hover { background: transparent; }
+#menu-dropdown.menu li.submenu::after {
+  content: '◂';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: #777;
+}
+
+/*──────────────── SUBMENU (flies left) ─────────────────────────────*/
+/* accordion header looks like a label row */
+#llm-toggle {
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  padding-right: 34px;                /* room for chevron */
+}
+#llm-toggle::after {
+  content: '▾';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  font-size: 0.8rem;
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform .2s;
+}
+/* rotate chevron when open */
+#llm-toggle.open::after { transform: translateY(-50%) rotate(-180deg); }
+
+/* accordion body inherits same row style but indented for hierarchy */
+.accordion-body {
+  padding-left: 0;                    /* remove UL padding */
+}
+.accordion-body li {
+  padding-left: 38px;                 /* indent rows */
+}
+
+.separator::before {
+  content: '';
+  display: block;
+  margin: 4px 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* underline & accent color for the active model */
+#llm-body li.selected,
+#llm-submenu li.selected {
+  font-weight: 600;
+  color: var(--accent-active);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+#llm-body li.selected {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: var(--accent);
+}
+#menu-dropdown.menu            { min-width: 200px; max-width: 260px; }
+#menu-dropdown.menu li,
+#llm-submenu li                { text-overflow: ellipsis; overflow: hidden; }
+
+
+/*──────────────── PRIMARY ACTIONS (blue text + accent bar) ────────*/
+#open-in-tab,
+#pause-btn,
+#export-btn {
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+#open-in-tab:hover,
+#pause-btn:hover,
+#export-btn:hover {
+  color: var(--accent-hover);
+}
+#open-in-tab:active,
+#pause-btn:active,
+#export-btn:active {
+  color: var(--accent-active);
+  background: #e7f1ff;
+}
+
+/*──────────────── RESET (danger) ───────────────────────────────────*/
+#reset-btn {
+  color: var(--danger);
+}
+#reset-btn:hover {
+  background: var(--danger-bg);
+  border-left-color: var(--danger);
+}
+
+
+/* by default, hide it */
+#goals-container    { display: none; }
+
+@media (min-width: 720px) {
+  #exploration-container,
+  #rationale-container {
+    margin: 0 var(--gutter);
+  }
+}
+
+
+/* only show when body has the rationale class */
+body.phase-rationale #goals-container { display: block; margin: 0 var(--gutter); }
+
+/* slider group */
+#score-filter-wrap {
+  display: flex;
+  align-items: center;      /* vertical-center all items */
+  justify-content: center;  /* center them as a group */
+  gap: 16px;                /* space between label/slider/value */
+  padding: 24px 12px;           /* optional vertical breathing room */
+  font-size: 16px;
+}
+
+/* Let the slider flex to fill the gap—clamp it so it’s never too tiny or huge */
+#score-filter-wrap input[type="range"] {
+  flex: 1;                  /* take up all available space */
+  min-width: 120px;         /* don’t collapse below this */
+  max-width: 280px;         /* or grow bigger than this */
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 1;
+}
+
+#score-filter-wrap label,
+#score-filter-wrap span {
+  flex: 0 0 auto;           /* only as big as their content */
+  margin: 0;                /* ensure no extra margins */
+}
+
+.score-filter-container {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  margin-bottom:16px;
+}
+.score-filter-container input[type="range"]{
+  width:50%;
+  height:var(--slider-track-height);
+  -webkit-appearance:none;
+  background:#ddd;
+  border-radius:calc(var(--slider-track-height)/2);
+}
+.score-filter-container input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:var(--slider-thumb-size);
+  height:var(--slider-thumb-size);
+  border-radius:50%;
+  background:var(--slider-thumb);
+  margin-top:calc((var(--slider-track-height)-var(--slider-thumb-size))/2);
+  cursor:pointer;
+  transition:background .2s;
+}
+.score-filter-container input[type="range"]::-webkit-slider-thumb:hover{
+  background:var(--slider-thumb-hover);
+}
+.score-filter-container input[type="range"]::-moz-range-thumb{
+  width:var(--slider-thumb-size);
+  height:var(--slider-thumb-size);
+  border-radius:50%;
+  background:var(--slider-thumb);
+  border:none;
+  cursor:pointer;
+  transition:background .2s;
+}
+.score-filter-container input[type="range"]::-moz-range-track{
+  height:var(--slider-track-height);
+  background:#ddd;
+  border-radius:calc(var(--slider-track-height)/2);
+}
+
+/* ─── MAIN SCROLL AREA ───────────────────────────────────────────────────────── */
+.main-container{
+  height:calc(100vh - (var(--slider-track-height) + 180px));
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:0;
+}
+
+/* ─── RATIONALE COLUMNS ─────────────────────────────────────────────────────── */
+.rationale-columns{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1rem;
+  margin-top:1rem;
+}
+.column{
+  background:#fff;
+  /* border:1px solid #ddd; */
+  border-radius:4px;
+  min-width:0;
+  min-height:200px;
+  padding:8px;
+  overflow-x:hidden;
+}
+.column h3{ margin-top:0; text-align:center; font-size: 20px; }
+.column.drag-over{ background:#def }
+
+
+
+/* ─── TIMELINE ROWS ────────────────────────────────────────────────────────── */
+.timeline-row,
+.timeline-right { min-width:0 }
+
+.timeline-row{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+  padding:12px;
+  background:#fff;
+  flex-wrap:wrap;
+  position:relative;          /* allows per-row tooltip */
+}
+.timeline-row:hover{ background:#f0f0f0 }
+
+/* split icon + time */
+.timeline-icon{ font-size:1.2rem }
+.timeline-time{ font-size:0.9rem; color:#888 }
+
+.timeline-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+
+.timeline-triage-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* left / right */
+.timeline-left {
+  flex:0 0 140px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items: flex-start;
+}
+.timeline-right{
+  flex:1 1 0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+}
+
+/* layout variants */
+.timeline-row.full   { flex-direction:row }
+.timeline-row.compact{
+  flex-direction:column;
+  gap:4px;
+  padding:8px 10px;
+}
+.timeline-row.compact .timeline-left,
+.timeline-row.compact .timeline-right{ flex:1 }
+
+/* timeline content */
+.timeline-title{ font-size:16px; font-weight:bold; color:#222 }
+.timeline-time { font-size:16px; color:#888 }
+.timeline-icons{ display:flex; gap:4px }
+.timeline-icons img.favicon{
+  width:20px; height:20px; object-fit:contain; cursor:pointer;
+}
+.timeline-sensemakingTrajectory{
+  font-size:16px;
+  font-style:italic;
+  color:#333;
+  background:aliceblue;
+  padding:8px 16px;
+  border-radius:4px;
+  overflow-wrap:break-word;
+}
+
+/* ---------- FACTORS ---------- */
+.factor-container{ margin-bottom:8px; width:100%; position:relative; }
+.factor-name-row { font-size:16px; color:#000; margin-bottom:4px }
+
+.factor-evidence-sentiment-row{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+}
+.factor-evidence-header{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.factor-evidence-header .del-btn {
+  position: static;       /* sit inline, not absolutely */
+  width: 16px;
+  height: 16px;
+  padding: 0;
+}
+
+.factor-evidence-main{
+  font-size:16px;
+  font-style:italic;
+  color:#555;
+  margin-bottom: 4px;
+}
+.factor-expander{
+  background:none;
+  border:none;
+  color:#2196F3;
+  cursor:pointer;
+  font-size:1rem;
+  padding:0 4px;
+  transition:color .2s;
+}
+.factor-expander:hover{ color:#1565C0 }
+.factor-evidence-extra-container{ margin-left:14px }
+.factor-evidence-extra{
+  font-size:16px;
+  font-style:italic;
+  color:#555;
+  display:flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.factor-evidence-header,
+.factor-evidence-extra {
+  position: relative;       /* so .del-btn is positioned inside */
+  padding-right: 24px;      /* room for the button */
+}
+
+.factor-evidence-extra > .del-btn {
+  position: static;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+}
+
+
+/* sentiment colours */
+.sentiment-positive{ color:#106510 }
+.sentiment-negative{ color:#db4c4c }
+.sentiment-neutral { color:#555 }
+
+/* Expand/Collapse All button */
+/* reset the button */
+.expand-factors-btn {
+  -webkit-appearance: none;   /* Safari/Chrome default button chrome */
+  appearance: none;           /* Firefox */
+  border: none;
+  background: none;
+
+  /* layout */
+  display: flex;              /* icon + label on one line */
+  align-items: center;
+  gap: 4px;
+
+  padding: 0;                 /* ← removes the left indent */
+  margin: 2px 0 0;            /* tiny spacing under the title */
+  cursor: pointer;
+
+  font-size: 0.9rem;
+  color: #666;                /* greyer text */
+  line-height: 1;
+
+  transition: color .15s ease, transform .1s ease;
+}
+
+.expand-factors-btn:hover   { color: #444; transform: scale(1.05); }
+.expand-factors-btn:active  { transform: scale(0.97); }
+
+.expander-icon   { width: 16px; height: 16px; pointer-events: none; }
+.expander-label  { pointer-events: none; }   /* keeps clicks on the button */
+
+
+.expand-factors-btn img {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;           /* delegate clicks to the button */
+}
+
+
+
+.factor-expander{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:1rem;
+  color:#2196F3;
+}
+.factor-expander img{
+  width:16px;
+  height:16px;
+}
+.factor-expander:hover{ color:#1565C0; }
+.expander-count{ font-weight:600; }
+
+
+
+/* ─── PER-ROW TOOLTIP ─────────────────────────────────────────────────────── */
+.factor-tooltip {
+  max-height: calc(100vh - 24px);  /* never taller than viewport minus some padding */
+  position: absolute;          /* relative to .timeline-row */
+  left: calc(100% + 12px);
+  top: 0;
+  z-index: 9999;
+  max-width: 600px;;
+  max-height: 800px;           /* constrain height for scrolling */
+  overflow-y: auto;            /* enable vertical scroll */
+  /* overflow-x: hidden; */    /* optionally hide horizontal overflow */
+
+  padding: 12px 16px;
+
+  font-size: 16px;
+  line-height: 1.35;
+
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.14);
+
+  pointer-events: auto;
+  user-select: text;
+  transition: opacity .12s ease;
+}
+
+/* Hide scrollbar in WebKit (Chrome, Safari) */
+.factor-tooltip::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Hide scrollbar in Firefox */
+.factor-tooltip {
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE 10+ */
+}
+
+
+.anchor-block      { margin-bottom:10px; margin-top: 8px;}
+.anchor-text       { color:#000; font-weight:600; margin-top: 4px; margin-bottom:4px; }
+.evidence-line     { margin-left:12px; margin-top:2px; font-style:italic }
+
+.anchor-highlight{
+  text-decoration:underline 3px solid #ffd54f;
+  text-underline-offset:2px;
+}
+
+/* metrics row */
+.anchor-metrics {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 12px;
+  align-items: center;
+  font-size: 16px;
+  color: #666;
+  margin: 12px 0px;
+  width: 100%;
+}
+.metric-icon{
+  width:20px;
+  height:20px;
+  vertical-align:middle;
+  margin-right:4px;
+  filter:grayscale(1) brightness(0.35);   /* grey-on-grey look like your emojis */
+}
+
+/* keep fragments inline */
+.anchor-text,
+.anchor-text span,
+.anchor-highlight{ display:inline }
+
+/* base wrapper for full anchor string */
+.anchor-base{ font-weight:600; color:inherit }
+
+/* ---------- Session summary card ---------- */
+.session-card{
+  background:#fff;
+  border:1px solid #e3e3e3;
+  border-radius:8px;
+  padding:16px 20px;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+  font-size:16px;
+  display: none;
+}
+.session-title   { font-size:1.3rem; color:#222 }
+.session-headline{ font-weight:500; margin:0 0 14px; line-height:1.4; color:#333 }
+.session-meta{
+  display:grid;
+  grid-template-columns:max-content 1fr;
+  column-gap:12px;
+  row-gap:6px;
+  margin:0;
+}
+.session-meta dt { font-weight:600; color:#555 }
+.session-meta dd { margin:0; color:#444 }
+.meta-row{ display:contents }
+
+/* editable hover cue */
+.editable-on:hover{ cursor:text }
+
+/* ——— DELETABLE UI ——————————————————————————— */
+/* each deletable element gets its own hover zone */
+.deletable          { position: relative; }
+
+.del-btn{
+  position:absolute; top:4px; right:4px;
+  width:18px; height:18px; padding:0; border:none;
+  cursor:pointer; z-index:3;               /* stay above text */
+  display:none; background:none;
+}
+.del-btn img{ width:100%; height:100%; object-fit:contain; }
+
+/* show the btn only for the element being hovered */
+.deletable:hover   > .del-btn{ display:block; }
+
+/* row-level button suppressed while you’re inside a child */
+.timeline-row:hover  > .row-del      { display:block; }
+.timeline-row:hover  .factor-container:hover  > .row-del      { display:none; }
+.timeline-row:hover  .factor-evidence-header:hover  ~ .row-del{ display:none; }
+
+/* placeholder image hover */
+.image-holder div:hover{ background:#ddd }
+
+/* always hide scrollbars */
+.image-holder {
+  /* hide FF scrollbar: */
+  scrollbar-width: none;
+  /* hide IE/Edge scrollbar: */
+  -ms-overflow-style: none;
+}
+.image-holder::-webkit-scrollbar {
+  display: none;
+}
+
+/* base holder: force full width, hide scrollbars */
+.image-holder {
+  display: flex;
+  gap: 6px;
+  width: 100%;            /* ← take the full available width */
+  flex-wrap: nowrap;      /* ← never wrap onto a new line */
+  overflow-x: auto;       /* ← allow horizontal scroll */
+  overflow-y: hidden;     /* ← never vertical scroll in compact */
+  scrollbar-width: none;  /* hide FF scrollbar */
+  -ms-overflow-style: none; /* hide IE/Edge scrollbar */
+  min-width: 0; /* allow shrinking so overflow-x works */
+}
+.image-holder::-webkit-scrollbar {
+  display: none;          /* hide WebKit scrollbar */
+}
+
+/* make sure each thumb won’t shrink */
+.image-holder img {
+  flex: 0 0 auto;
+}
+
+/* Session factor/schema */
+.session-factors {
+  margin-top: var(--gap, 24px);
+}
+
+.session-factors h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--fg-label, #555);
+}
+
+.session-factors ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--factor-gap);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.session-factors li {
+  background: var(--factor-bg);
+  border: 1px solid var(--factor-border);
+  border-radius: var(--factor-radius);
+  padding: var(--factor-padding);
+  font-size: var(--factor-font-size);
+  color: var(--factor-color);
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.session-factors li:hover {
+  background: var(--factor-hover-bg);
+  border-color: var(--factor-hover-border);
+}
+
+.session-factors li sup {
+  font-size: 0.7em;
+  margin-left: 4px;
+  color: #666;
+}
+
+.factor-add {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: var(--factor-font-size);
+  color: #666;
+  border: 1px dashed var(--factor-border);
+  border-radius: var(--factor-radius);
+  cursor: text;                    /* I-beam cursor */
+  user-select: none;
+  transition: background .2s;
+}
+.factor-add:hover {
+  background: #f3f3f3;
+}
+.factor-add.editing {
+  border-style: solid;
+  color: var(--factor-color);
+  background: #fff;
+}
+
+/* ─── Hover hierarchy overrides ───────────────────────────────────────── */
+
+/* 1) Base row hover remains light-grey */
+.timeline-row:hover {
+  background: #f0f0f0;
+}
+
+/* 2) When a factor is hovered, make it a bit darker */
+/*    More specific than .timeline-row:hover, so it wins */
+.timeline-row .factor-container:hover {
+  background: #e8e8e8;   /* factor-level grey */
+}
+
+/* 3) When evidence snippet is hovered, even darker */
+.timeline-row .factor-evidence-header:hover,
+.timeline-row .factor-evidence-extra:hover {
+  background: #d0d0d0;   /* evidence-level grey */
+}
+
+/* 4) Ensure text remains legible when darker */
+.timeline-row .factor-evidence-header:hover .factor-evidence-main,
+.timeline-row .factor-evidence-extra:hover {
+  color: #111;
+}
+
+/* --- compact rows: make children stretch so overflow works ------------- */
+/* ensure each compact row stretches, and the strip really overflows */
+.timeline-row.compact          { align-items: stretch; } /* ① */
+.timeline-row.compact .image-holder {
+  /* show only ~240px of whatever width is available */
+  max-width: 240px;
+  
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;      
+  overflow-x: auto;       
+  overflow-y: hidden;
+
+  /* keep scrollbars hidden if you like */
+  scrollbar-width: none;
+}
+.timeline-row.compact .image-holder::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* FULL: plenty of width → vertical stack */
+.timeline-row.full .image-holder {
+  flex-direction: column;
+  width: auto;            /* override the 100% if needed */
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* shared thumb styling */
+.thumb-btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.8);
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  /* small, square hit-area */
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 2px;
+}
+
+/* icon inside fills most of the button */
+.thumb-btn img {
+  width: 16px;
+  height: 16px;
+  pointer-events: none; /* let clicks fall through to the button */
+}
+
+/* Prev & Next positioning */
+.thumb-prev {
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+}
+.thumb-next {
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+}
+
+/* Close positioning (inset tighter) */
+.thumb-close {
+  top: 8px;
+  right: 8px;
+}
+
+.thumb-delete {
+  top: 8px;
+  right: 40px;          /* just left of the “close” button */
+  background: rgba(219,76,76,0.9);
+}
+.thumb-delete img {
+  width: 14px;
+  height: 14px;
+}
+
+/* Override any other overflow/scrollbar rules you have on the modal */
+#thumb-modal {
+  /* ensure we can click outside to close */
+  cursor: default;
+}
+#thumb-modal > #thumb-wrapper {
+  cursor: auto;
+}
+
+
