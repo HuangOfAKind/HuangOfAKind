@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Roads Not Taken",
+  "version": "0.2.2",
+  "minimum_chrome_version": "116",
+  "description": "\"Two roads diverged in a yellow wood, And sorry I could not travel both.\" --- Robert Frost",
+  "permissions": [
+    "activeTab","storage","webNavigation","tabs","unlimitedStorage",
+    "windows","scripting","system.display","declarativeNetRequest",
+    "favicon","system.cpu","sidePanel"
+  ],
+  "icons": {
+    "16":  "icons/icon_16.png",
+    "48":  "icons/icon_32.png",
+    "192": "icons/icon_192.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*","https://*/*"],
+      "exclude_matches": [
+        "*://www.notion.so/*",
+        "*://www.dropbox.com/*"
+      ],
+      "js":  ["content.js"],
+      "css": ["css/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidePanel.html"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.js","*.html","css/*.css","icons/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

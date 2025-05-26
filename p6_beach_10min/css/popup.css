@@ -1,0 +1,103 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 320px;
+  height: 320px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f6;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Containers share card styling */
+#main,
+#intentionContainer,
+#initializingContainer {
+  box-sizing: border-box;
+  padding: 16px;
+  background: #fff;
+  margin: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Visibility toggles */
+.visible {
+  display: flex;
+}
+.hidden {
+  display: none;
+}
+
+/* Main menu layout (vertical list) */
+.visible#main {
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+#main button {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+}
+
+/* Intention form layout */
+.visible#intentionContainer {
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  flex: 1;
+  align-items: center; /* center children horizontally */
+}
+#intentionContainer label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  width: 90%;        /* constrain label width */
+  text-align: center;
+  font-size: 16px
+}
+#intentionContainer textarea {
+  width: 90%;        /* narrower textarea for centering */
+  min-height: 100px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+.buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center; /* center buttons */
+  width: 90%;              /* align with textarea */
+}
+.buttons button {
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+/* Initializing screen layout */
+.visible#initializingContainer {
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-size: 16px;
+}
+
+/* Shared Button Styles */
+button {
+  background-color: #0078d4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+button:hover {
+  background-color: #005a9e;
+}
+button:active {
+  background-color: #004070;
+}
