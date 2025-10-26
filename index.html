@@ -6,71 +6,11 @@
   <title>Zhicheng's Portfolio</title>
   <meta name="description" content="Portfolio showcasing accessibility analysis, personas & storyboarding, and responsive redesign projects">
   <link href="assets/css/main.css" rel="stylesheet">
-  <style>
-    .intro {
-      max-width: 800px;
-      margin: 80px auto 40px;
-      text-align: center;
-    }
-    .intro h2 {
-      font-size: 2rem;
-      margin-bottom: 16px;
-    }
-    h2 {
-      text-align: center;
-    }
-    .intro p {
-      font-size: 1rem;
-      line-height: 1.6;
-      margin: 0 auto;
-    }
-    .project-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .project-row {
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .project-cell {
-      flex: 1 1 50%;
-      box-sizing: border-box;
-      padding: 16px;
-      min-width: 300px;
-    }
-    .project-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 16px;
-      height: 100%;
-      text-decoration: none;
-      color: inherit;
-    }
-    .project-card img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-      margin-bottom: 12px;
-    }
-    .project-card h3 {
-      margin: 0 0 8px;
-      font-size: 1.25rem;
-      text-align: center;
-    }
-    .project-card p {
-      margin: 0;
-      font-size: 1rem;
-      line-height: 1.4;
-      text-align: center;
-    }
-  </style>
+  <link href="assets/css/quiz.css" rel="stylesheet">
 </head>
 <body class="portfolio-page">
   <header class="header fixed-top" role="banner">
-    <div class="header-container">
+    <!-- <div class="header-container">
       <a href="index.html" class="logo">
         <h1 class="sitename">My Design Portfolio</h1>
       </a>
@@ -82,48 +22,127 @@
         </ul>
         <button class="mobile-nav-toggle" aria-label="Toggle navigation">Menu</button>
       </nav>
-    </div>
+    </div> -->
   </header>
 
-  <main id="projects" class="main" tabindex="-1">
-    <div class="container">
-      <div class="intro">
-        <h2>Welcome to My Portfolio!</h2>
-        <p>I am currently a second-year student in the Sc.M. of Computer Science program at Brown University. Let's explore how I've iterated through user research and HiFi prototypes to solve real-world problems!</p>
-      </div>
-      <h2>Featured Projects</h2>
-      <table class="project-table">
-        <tr class="project-row">
-          <td class="project-cell">
-            <a href="accessible.html" class="project-card">
-              <img src="assets/img/assignment1/state_diagrams.jpg" alt="Thumbnail for Accordion Redesign">
-              <h3>Accordion Component Accessibility &amp; Redesign</h3>
-              <p>I tackled the challenge of making hierarchical content intuitive and inclusive across Safari, Zotero, and VS Code. My audience included keyboard and screen-reader users navigating complex lists. In early iterations I compared native details/summary elements with custom ARIA patterns, weighing simplicity against styling flexibility. The final design combines semantic markup, clear focus states, and “Show all/Hide all” controls, demonstrating how iterative testing and semantic design improve both usability and accessibility.</p>
-            </a>
-          </td>
-          <td class="project-cell">
-            <a href="persona.html" class="project-card">
-              <img src="assets/img/assignment2/storyboard.png" alt="Thumbnail for Personas &amp; Storyboarding">
-              <h3>Personas &amp; Storyboarding</h3>
-              <p>I conducted contextual observations and interviews at a self-checkout kiosk in Whole Foods to understand user goals and frustrations. My audience comprised everyday shoppers and UX researchers looking to streamline self-service workflows. Iterations refined my interview scripts and storyboard frames to spotlight pain points such as scanner errors and unclear item labels. My findings underscore the power of empathy-driven storytelling to guide design decisions and humanize automated experiences.</p>
-            </a>
-          </td>
-        </tr>
-        <tr class="project-row">
-          <td class="project-cell">
-            <a href="redesign.html" class="project-card">
-              <img src="assets/img/assignment3/Major_components.png" alt="Thumbnail for Responsive Redesign">
-              <h3>Responsive Redesign for Quora</h3>
-              <p>I reimagined a Quora Q&amp;A page to enhance content hierarchy and readability across devices. My audience, knowledge seekers frustrated by mixed content and hidden ads, guided my layout choices. I created mobile, tablet, and desktop mockups balancing whitespace, typographic scale, and subtle signifiers for sponsored versus related content. The hi-fi prototype, built with Bootstrap, shows how deliberate spacing and semantic styling can reduce cognitive load and foster a focused reading experience.</p>
-            </a>
-          </td>
-          <td class="project-cell"></td>
-        </tr>
-      </table>
-    </div>
-  </main>
+    <main id="quiz" class="main" tabindex="-1">
+    <section class="quiz">
+        <h2>Test Your Knowledge!</h2>
+        <div class="quiz-description">
+            <p>
+                For each of the statements below, please give a low end estimate of your answer and a high end estimate of your answer. Select your low end and high end in such a way that you are 90% confident that the true answer is between those two numbers.
+            </p>
+            <p>
+                For example, if the statement is "Population of San Diego?", and you're pretty confident it's around 2 million, you might give a narrow range to represent your low end and high end (e.g., 1.8 million to 2.2 million). If you're not that confident, you would give a larger range (e.g., 500 thousand to 3.5 million) to account for your uncertainty.
+            </p>
+        </div>
+        <form id="quiz-form">
+            <div class="question-group">
+                <label for="q1-low">1. Number of active iPhones worldwide as of 2025?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q1-low" name="q1-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q1-high" name="q1-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q2-low">2. India's 2024 Gross Domestic Product?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q2-low" name="q2-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q2-high" name="q2-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q3-low">3. Cities in China with a population over 1 million (as of 2021)?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q3-low" name="q3-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q3-high" name="q3-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q4-low">4. Number of Toyota Corollas sold in the US in 2024?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q4-low" name="q4-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q4-high" name="q4-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q5-low">5. Average salary of public school teachers in California during the 2023-2024 school year?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q5-low" name="q5-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q5-high" name="q5-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q6-low">6. Number of visitors to Disney Land in Anaheim, CA in 2024?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q6-low" name="q6-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q6-high" name="q6-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q7-low">7. L'Oreal Paris 2024 Revenue (in dollars)?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q7-low" name="q7-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q7-high" name="q7-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q8-low">8. Number of monthly active users of WhatsApp worldwide as of 2025?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q8-low" name="q8-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q8-high" name="q8-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q9-low">9. Number of US states that have a coastline (ocean or lake)?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q9-low" name="q9-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q9-high" name="q9-high" required min="0">
+                </div>
+            </div>
+
+            <div class="question-group">
+                <label for="q10-low">10. Number of shows in Taylor Swift's Eras Tour?</label>
+                <div class="input-group">
+                    <span>Low end:</span>
+                    <input type="number" id="q10-low" name="q10-low" required min="0">
+                    <span>High end:</span>
+                    <input type="number" id="q10-high" name="q10-high" required min="0">
+                </div>
+            </div>
+
+            <input type="submit" value="Submit Answers">
+        </form>
+    </section>
 
   <a href="#" id="scroll-top" class="scroll-top" aria-label="Scroll to top"><span>↑</span></a>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/quiz.js"></script>
 </body>
 </html>
