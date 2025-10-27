@@ -2,6 +2,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const quizForm = document.getElementById('quiz-form');
     if (!quizForm) return;
 
+    // Debug button to show all content
+    const debugButton = document.getElementById('debug-show-all');
+    if (debugButton) {
+        debugButton.addEventListener('click', function() {
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) {
+                mainContent.style.display = 'block';
+                // Scroll to main content
+                mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    // correct answers here
+    const correctAnswers = {
+        question1: { value: 1560000000, description: "Active iPhones worldwide (2025 estimate)" },
+        question2: { value: 3913000000000, description: "India GDP (2024, USD)" },
+        question3: { value: 113, description: "Cities in China with >1M population (2021)" },
+        question4: { value: 232908, description: "Toyota Corollas sold in US (2024)" },
+        question5: { value: 101084, description: "Avg salary of CA public school teachers (2023-24, USD)" },
+        question6: { value: 16881000, description: "Visitors to Disneyland Anaheim (2024)" },
+        question7: { value: 50543000000, description: "L'Oréal Paris revenue (2024, USD)" },
+        question8: { value: 2950000000, description: "WhatsApp monthly active users (2025)" },
+        question9: { value: 30, description: "US states with a coastline (ocean or lake)" },
+        question10: { value: 149, description: "Number of shows in Taylor Swift's Eras Tour" }
+    };
+
     quizForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -58,8 +85,88 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         localStorage.setItem('quizAnswers', JSON.stringify(answers));
-        alert('Thank you for your answers!');
-        quizForm.reset();
+
+        // calculate score
+        let correctCount = 0;
+        let resultsHTML = '<div class="container">';
+        resultsHTML += '<div class="row"><div class="col-lg-10 mx-auto">';
+        resultsHTML += '<h2 class="text-center mb-4">Quiz Results</h2>';
+        
+        // show results
+        resultsHTML += '<div class="mb-4">';
+        let questionNum = 1;
+        for (let question in answers) {
+            const correctValue = correctAnswers[question].value;
+            const userLow = answers[question].low;
+            const userHigh = answers[question].high;
+            const isCorrect = correctValue >= userLow && correctValue <= userHigh;
+            
+            if (isCorrect) {
+                correctCount++;
+            }
+
+            const statusIcon = isCorrect ? 'check_circle' : 'cancel';
+            const statusClass = isCorrect ? 'text-success' : 'text-danger';
+            const statusText = isCorrect ? 'Correct' : 'Incorrect';
+
+            resultsHTML += `
+                <div class="card mb-3 border">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h6 class="mb-2">Question ${questionNum}</h6>
+                            <small class="${statusClass} fw-bold d-flex align-items-center gap-1">
+                                <span class="material-icons" style="font-size: 16px;">${statusIcon}</span>
+                                ${statusText}
+                            </small>
+                        </div>
+                        <p class="mb-1 text-muted small"><strong>Your range:</strong> ${userLow.toLocaleString()} - ${userHigh.toLocaleString()}</p>
+                        <p class="mb-0 small"><strong>Correct answer:</strong> ${correctValue.toLocaleString()} <span class="text-muted">(${correctAnswers[question].description})</span></p>
+                    </div>
+                </div>
+            `;
+            questionNum++;
+        }
+        resultsHTML += '</div>';
+
+        // diagnosis
+        let confidenceMessage = '';
+        if (correctCount < 5) {
+            confidenceMessage = 'You are extremely over confident! With appropriate confidence, the correct answer should have been within your range for 9 out of the 10 questions.';
+        } else if (correctCount <= 8) {
+            confidenceMessage = 'You are overconfident. With appropriate confidence, the correct answer should have been within your range for 9 out of the 10 questions.';
+        } else if (correctCount === 9) {
+            confidenceMessage = 'Congratulations! You have appropriate confidence. With appropriate confidence, the correct answer will be within your range for 9 out of the 10 questions.';
+        } else {
+            confidenceMessage = 'Wow! You are one of the rare people who are under-confident. With appropriate confidence the correct answer should have been within your range for 9 out of the 10 questions. You got all 10, which suggests you could be a bit more confident in your assessments.';
+        }
+
+        // quiz summary
+        resultsHTML += `
+            <div class="card border">
+                <div class="card-body p-4">
+                    <h5 class="text-center mb-3">Final Score: ${correctCount} out of ${Object.keys(answers).length}</h5>
+                    <hr>
+                    <h6 class="mb-2">Confidence Assessment</h6>
+                    <p class="mb-0">${confidenceMessage}</p>
+                </div>
+            </div>
+        `;
+
+        resultsHTML += '</div></div></div>';
+
+        // prepare main content, hide quiz
+        const quizContainer = document.querySelector('.quiz');
+        const resultsDiv = document.createElement('div');
+        resultsDiv.className = 'results-page py-5';
+        resultsDiv.innerHTML = resultsHTML;
+        quizContainer.style.display = 'none';
+        quizContainer.parentNode.insertBefore(resultsDiv, quizContainer.nextSibling);
+        
+        // show main content section
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.style.display = 'block';
+        }
     });
 
     // Validate input on change
