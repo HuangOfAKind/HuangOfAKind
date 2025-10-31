@@ -133,6 +133,32 @@
   color: #555;
 }
 
+/* References styling */
+.references {
+  color: #666;
+  line-height: 1.6;
+}
+
+.ref-item {
+  text-indent: -2em;
+  padding-left: 2em;
+  margin-bottom: 1rem;
+}
+
+.ref-item:last-child {
+  margin-bottom: 0;
+}
+
+.ref-item a {
+  color: #0066cc;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.ref-item a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .quiz {
     margin: 20px;
