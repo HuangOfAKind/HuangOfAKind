@@ -1,0 +1,732 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5efe6;
+  color: #3a3028;
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Theme variables — warm beige */
+:root {
+  --accent: #c87a3a;
+  --accent-light: #b8723a;
+  --accent-glow: rgba(200, 122, 58, 0.4);
+  --accent-border: rgba(180, 120, 60, 0.2);
+  --accent-border-med: rgba(180, 120, 60, 0.25);
+  --accent-bg: rgba(200, 122, 58, 0.08);
+  --accent-bg-hover: rgba(200, 122, 58, 0.14);
+  --accent-bg-light: rgba(200, 122, 58, 0.06);
+  --accent-bg-strong: rgba(200, 122, 58, 0.2);
+  --accent-border-strong: rgba(200, 122, 58, 0.4);
+  --accent-scroll: rgba(200, 122, 58, 0.2);
+  --arc-path: rgba(180, 120, 60, 0.2);
+  --arc-progress: rgba(200, 122, 58, 0.55);
+  --compass-tooltip-border: rgba(180, 120, 60, 0.3);
+  --surface: rgba(255, 250, 243, 0.92);
+  --surface-solid: #fffaf3;
+  --text: #3a3028;
+  --text-secondary: #8a7e72;
+  --text-tertiary: #a89e92;
+  --border-subtle: rgba(160, 140, 110, 0.12);
+  --shadow: rgba(80, 60, 30, 0.12);
+}
+
+body.sunrise {
+  --accent: #c06848;
+  --accent-light: #b06048;
+  --accent-glow: rgba(192, 104, 72, 0.4);
+  --accent-border: rgba(192, 104, 72, 0.2);
+  --accent-border-med: rgba(192, 104, 72, 0.25);
+  --accent-bg: rgba(192, 104, 72, 0.08);
+  --accent-bg-hover: rgba(192, 104, 72, 0.14);
+  --accent-bg-light: rgba(192, 104, 72, 0.06);
+  --accent-bg-strong: rgba(192, 104, 72, 0.2);
+  --accent-border-strong: rgba(192, 104, 72, 0.4);
+  --accent-scroll: rgba(192, 104, 72, 0.2);
+  --arc-path: rgba(192, 104, 72, 0.2);
+  --arc-progress: rgba(192, 104, 72, 0.55);
+  --compass-tooltip-border: rgba(192, 104, 72, 0.3);
+}
+
+/* Map */
+#map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Sidebar */
+#sidebar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  bottom: 16px;
+  width: 340px;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--accent-border);
+  box-shadow: 0 8px 32px var(--shadow);
+  transition: border-color 0.4s;
+  /* Sidebar entrance animation */
+  opacity: 0;
+  transform: translateX(20px);
+  animation: sidebarEnter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+@keyframes sidebarEnter {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#sidebar h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem;
+  padding: 20px 20px 8px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.4s;
+}
+
+#status {
+  padding: 4px 20px 16px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+#status .countdown-time {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+#cemetery-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px 0;
+}
+
+#cemetery-list li {
+  padding: 14px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.15s;
+  position: relative;
+  overflow: hidden;
+  /* List stagger — set per-item via JS */
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeSlideIn 0.35s ease forwards;
+}
+
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* List hover glow */
+#cemetery-list li::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--accent-bg-hover), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+#cemetery-list li:hover::before {
+  opacity: 1;
+}
+
+#cemetery-list li:hover {
+  background: transparent;
+}
+
+#cemetery-list li .name {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  color: var(--text);
+  position: relative;
+}
+
+#cemetery-list li .meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 12px;
+  position: relative;
+}
+
+#cemetery-list li .sunset-time {
+  color: var(--accent-light);
+  font-weight: 500;
+  transition: color 0.4s;
+}
+
+/* "Next" badge */
+#cemetery-list li.next-cemetery {
+  border-left: 2px solid var(--accent);
+}
+
+.next-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: var(--accent);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 8px;
+  vertical-align: middle;
+  position: relative;
+}
+
+/* Loading overlay */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(245, 239, 230, 0.88);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  transition: opacity 0.4s;
+}
+
+#loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#loading-overlay p {
+  margin-top: 20px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  transition: opacity 0.3s;
+}
+
+/* Sun loader */
+.sun-loader {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.sun-loader-body {
+  width: 24px;
+  height: 24px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 16px var(--accent-glow);
+  animation: sunLoaderPulse 1.5s ease-in-out infinite;
+}
+
+.sun-loader-rays {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 3px solid transparent;
+  border-top-color: var(--accent);
+  border-bottom-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes sunLoaderPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Leaflet popup overrides */
+.leaflet-popup-content-wrapper {
+  background: var(--surface-solid);
+  color: var(--text);
+  border-radius: 8px;
+  border: 1px solid var(--accent-border-med);
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.leaflet-popup-tip {
+  background: var(--surface-solid);
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.leaflet-popup-content .popup-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.leaflet-popup-content .popup-sunset {
+  color: var(--accent-light);
+}
+
+/* Custom marker — breathing pulse */
+.cemetery-marker {
+  background: var(--accent);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: markerPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes markerPulse {
+  0%, 100% { box-shadow: 0 0 8px var(--accent-glow); }
+  50% { box-shadow: 0 0 16px var(--accent-glow), 0 0 24px rgba(200, 122, 58, 0.15); }
+}
+
+/* User marker with sonar ring */
+.user-marker {
+  background: #4a90c8;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 0 12px rgba(74, 144, 200, 0.5);
+  position: relative;
+}
+
+.user-marker::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(74, 144, 200, 0.5);
+  transform: translate(-50%, -50%);
+  animation: sonarRing 2s ease-out infinite;
+}
+
+@keyframes sonarRing {
+  0% { width: 16px; height: 16px; opacity: 0.7; }
+  100% { width: 48px; height: 48px; opacity: 0; }
+}
+
+/* Detail panel */
+#detail-panel {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-solid);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 10;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+#detail-panel.hidden {
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#detail-back {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 16px 20px 8px;
+  text-align: left;
+  font-family: inherit;
+}
+
+#detail-back:hover {
+  color: #d08848;
+}
+
+#detail-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 4px 20px 8px;
+  color: var(--text);
+}
+
+#detail-meta {
+  padding: 0 20px 12px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 14px;
+}
+
+#detail-meta .sunset-time {
+  color: var(--accent-light);
+  font-weight: 500;
+}
+
+#detail-embed {
+  padding: 0 12px;
+  margin-bottom: 12px;
+}
+
+#detail-embed iframe {
+  width: 100%;
+  height: 220px;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+}
+
+#detail-links {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#detail-links a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: background 0.15s;
+}
+
+#detail-links a:hover {
+  background: var(--accent-bg-hover);
+}
+
+#detail-links a .link-icon {
+  font-size: 1.1rem;
+  width: 22px;
+  text-align: center;
+}
+
+/* Error state */
+.error-msg {
+  text-align: center;
+  padding: 40px 20px;
+  color: #b84a4a;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Responsive: mobile bottom sheet */
+@media (max-width: 640px) {
+  #sidebar {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 45vh;
+    border-radius: 16px 16px 0 0;
+    transform: none;
+    animation: sidebarEnterMobile 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    opacity: 0;
+  }
+
+  @keyframes sidebarEnterMobile {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #sidebar h1 {
+    text-align: center;
+  }
+
+  #map {
+    bottom: 0;
+  }
+
+  /* Mobile drag handle */
+  .drag-handle {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0 4px;
+  }
+
+  .drag-pill {
+    width: 36px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+  }
+}
+
+/* Hide drag handle on desktop */
+.drag-handle {
+  display: none;
+}
+
+/* Scrollbar */
+#cemetery-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+#cemetery-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#cemetery-list::-webkit-scrollbar-thumb {
+  background: var(--accent-scroll);
+  border-radius: 4px;
+}
+
+/* === Sky Gradient Sidebar === */
+#sky-gradient {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 12px 0 0 12px;
+  z-index: 20;
+  transition: background 2s ease;
+}
+
+#sky-gradient .sun-dot {
+  position: absolute;
+  left: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e8b030;
+  box-shadow: 0 0 8px 2px rgba(232, 176, 48, 0.5);
+  transition: top 2s ease, opacity 0.5s;
+}
+
+/* === Sidebar Header (h1 + compass toggle) === */
+.sidebar-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 12px;
+}
+
+.sidebar-header h1 {
+  flex: 1;
+}
+
+.tagline {
+  width: 100%;
+  padding: 0 20px 8px;
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.01em;
+}
+
+.mode-toggle {
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  transition: color 0.4s;
+}
+
+.mode-toggle:hover {
+  color: var(--accent-light);
+}
+
+#compass-toggle {
+  background: var(--accent-bg-light);
+  border: 1px solid var(--accent-border-med);
+  color: var(--accent);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+#compass-toggle:hover {
+  background: var(--accent-bg-hover);
+}
+
+#compass-toggle.active {
+  background: var(--accent-bg-strong);
+  border-color: var(--accent-border-strong);
+}
+
+/* === Sun Path Arc === */
+#sun-arc {
+  padding: 8px 20px 4px;
+  text-align: center;
+  min-height: 0;
+}
+
+#sun-arc svg {
+  display: block;
+  margin: 0 auto;
+}
+
+#sun-arc .arc-label {
+  font-size: 0.7rem;
+  fill: var(--text-secondary);
+}
+
+#sun-arc .arc-path {
+  fill: none;
+  stroke: var(--arc-path);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+#sun-arc .arc-progress {
+  fill: none;
+  stroke: var(--arc-progress);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+#sun-arc .sun-marker {
+  fill: #e8a020;
+  filter: url(#sun-glow);
+}
+
+#sun-arc .cemetery-tick {
+  fill: var(--accent-light);
+  opacity: 0.7;
+}
+
+#sun-arc .golden-hour-arc {
+  fill: none;
+  stroke: rgba(220, 170, 60, 0.2);
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+/* === Compass View — smooth transition === */
+#compass-view {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  transition: opacity 0.3s ease, max-height 0.4s ease;
+  max-height: 500px;
+  opacity: 1;
+}
+
+#compass-view.hidden {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+#compass-view svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.compass-label {
+  fill: var(--text-secondary);
+  font-size: 11px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.compass-ring {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.06);
+  stroke-width: 1;
+}
+
+.compass-dot {
+  cursor: pointer;
+  transition: r 0.15s;
+}
+
+.compass-dot:hover {
+  r: 7;
+}
+
+.compass-tooltip {
+  position: absolute;
+  background: var(--surface-solid);
+  border: 1px solid var(--compass-tooltip-border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  color: var(--text);
+  pointer-events: none;
+  z-index: 30;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.compass-tooltip.visible {
+  opacity: 1;
+}
+
+/* === Glow filter for SVG === */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  #sky-gradient {
+    display: none;
+  }
+
+  #compass-view {
+    padding: 8px;
+  }
+
+  #compass-view.hidden {
+    padding: 0 8px;
+  }
+}

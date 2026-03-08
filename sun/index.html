@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cemetery Sunsets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="map"></div>
+
+  <div id="sidebar">
+    <div class="drag-handle"><div class="drag-pill"></div></div>
+    <div id="sky-gradient"><div class="sun-dot"></div></div>
+    <div class="sidebar-header">
+      <h1 id="app-title">Cemetery Sunsets</h1>
+      <p class="tagline">watch a <span id="mode-toggle" class="mode-toggle">sunset</span> every day</p>
+      <button id="compass-toggle" title="Toggle compass view">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><polygon points="12,2 14.5,9.5 12,8 9.5,9.5" fill="currentColor" stroke="none"/><polygon points="12,22 9.5,14.5 12,16 14.5,14.5" fill="rgba(255,255,255,0.3)" stroke="none"/>
+        </svg>
+      </button>
+    </div>
+    <div id="status">Detecting your location&hellip;</div>
+    <div id="sun-arc"></div>
+    <ul id="cemetery-list"></ul>
+    <div id="compass-view" class="hidden"></div>
+    <div id="detail-panel" class="hidden">
+      <button id="detail-back">&larr; Back</button>
+      <h2 id="detail-name"></h2>
+      <div id="detail-meta"></div>
+      <div id="detail-embed"></div>
+      <div id="detail-links"></div>
+    </div>
+  </div>
+
+  <div id="loading-overlay">
+    <div class="sun-loader">
+      <div class="sun-loader-body"></div>
+      <div class="sun-loader-rays"></div>
+    </div>
+    <p class="loading-msg">Tracing the light&hellip;</p>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
